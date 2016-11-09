@@ -55,4 +55,7 @@ form {
 .mover {
     height: 100px;
     width: 73.333px;
+    //uses hardware acceleration http://blog.teamtreehouse.com/increase-your-sites-performance-with-hardware-accelerated-css
+    //the below CSS3 transformation will boost performance during painting process
+    transform: translateZ(0);
 }

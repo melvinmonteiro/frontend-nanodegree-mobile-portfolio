@@ -493,18 +493,19 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  var noOfPizzaColumns = Math.floor(viewPortHeight/256) +1;
-
   //getElementsByClassName is faster than querySelector https://jsperf.com/getelementsbyclassname-vs-queryselectorall/25
   var items = document.getElementsByClassName('mover');
   //moving this constant to the top will not trigger the layout chain again
   var scrollTopConstant = (document.body.scrollTop / 1250);
 
+  var phases = [];
+  for ( var i = 0 ; i < 5 ; i++) {
+    phases.push(Math.sin(scrollTopConstant + (i % 5)));
+  }
+
   //we don't need animate all the pizza's
-  for (var i = 0; i < noOfPizzaColumns*8 ; i++) {
-    var phase = Math.sin(scrollTopConstant + (i % 5));
-    items[i].style.left = (((i % 8)*256) + (100 *  phase)) + 'px';
+  for (var i = 0; i < items.length ; i++) {
+    items[i].style.left = (((i % 8)*256) + (100 *  phases[i%5])) + 'px';
     //i tried using transform but no difference.
     //var translateX = ((i % 8)*256) + 50 * phase + 'px';
     //items[i].style.webkitTransform  = "translateX("+translateX+")";
@@ -526,7 +527,11 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+
+  var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var noOfPizzaColumns = Math.floor(viewPortHeight/256) +1;
+
+  for (var i = 0; i < noOfPizzaColumns*8 ; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
