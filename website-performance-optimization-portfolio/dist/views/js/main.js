@@ -441,6 +441,7 @@ var resizePizzas = function(size) {
    var pizzaContainer = document.querySelectorAll(".randomPizzaContainer")
    var dxPercent = determineDx(size);
     for (var i = 0; i < pizzaContainer.length; i++) {
+      //no need of complicated calculations. instead we just use %. this was taught in cameron's udacity class.
       pizzaContainer[i].style.width = dxPercent + "%";
     }
   }
@@ -457,6 +458,8 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+
+//this can be moved out.
 var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
@@ -487,15 +490,24 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
-  scrolling = false;
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
-  var scrollTopValue = (document.body.scrollTop / 1250);
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin(scrollTopValue + (i % 5));
-    items[i].style.left = ((i % 8)*256) + 100 * phase + 'px';
+  var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var noOfPizzaColumns = Math.floor(viewPortHeight/256) +1;
+
+  //getElementsByClassName is faster than querySelector https://jsperf.com/getelementsbyclassname-vs-queryselectorall/25
+  var items = document.getElementsByClassName('mover');
+  //moving this constant to the top will not trigger the layout chain again
+  var scrollTopConstant = (document.body.scrollTop / 1250);
+
+  //we don't need animate all the pizza's
+  for (var i = 0; i < noOfPizzaColumns*8 ; i++) {
+    var phase = Math.sin(scrollTopConstant + (i % 5));
+    items[i].style.left = (((i % 8)*256) + (100 *  phase)) + 'px';
+    //i tried using transform but no difference.
+    //var translateX = ((i % 8)*256) + 50 * phase + 'px';
+    //items[i].style.webkitTransform  = "translateX("+translateX+")";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -507,17 +519,8 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
-
-var scrolling = false;
-function onScroll() {
-	if(!scrolling) {
-		requestAnimationFrame(updatePositions);
-	}
-	scrolling = true;
-}
-
 // runs updatePositions on scroll
-window.addEventListener('scroll', onScroll);
+window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
@@ -527,14 +530,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
-    elem.style.height = "100px";
-    elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
+    //elem.style.height = "100px"; moved this to the css.
+    //elem.style.width = "73.333px";
+    var constVal = (i % cols) * s;
+    elem.basicLeft = constVal;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    //we don't call update positions as that will loop again. instead we give the left stype right here.
     var phase = Math.sin(i % 5);
-    elem.style.left = elem.basicLeft + 100 * phase + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    elem.style.left = constVal + 100 * phase + 'px';
+    //get element by id
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
-  //we don't need to update positions on start
+  //we don't need to update positions on start as i have calulated them below
   //updatePositions();
 });

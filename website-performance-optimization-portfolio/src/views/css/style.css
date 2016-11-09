@@ -46,6 +46,12 @@ form {
   clear:both;
 }
 
- .container {
+.container {
   background-color: rgba(240, 60, 60, 0.8);
+}
+
+.mover {
+   //uses hardware acceleration http://blog.teamtreehouse.com/increase-your-sites-performance-with-hardware-accelerated-css
+   //the below CSS3 transformation will boost performance during painting process
+   transform: translateZ(0);
 }
