@@ -27,5 +27,5 @@ Code repository is [here] (https://github.com/melvinmonteiro/melvinmonteiro.gith
 * use a css attribute transform on .mover so that CSS3 transformation will boost performance during painting process
 * remove redundant code from for loops
 
-#NOTES
+###NOTES
 I have used manual tools for compressing images and minifying js as they are very few
