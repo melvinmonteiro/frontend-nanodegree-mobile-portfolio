@@ -15,11 +15,9 @@ Code repository is [here] (https://github.com/melvinmonteiro/melvinmonteiro.gith
 
 ### FOR PART 2: Frame Rate & Computational Efficiency Specification
 
-use link
-https://melvinmonteiro.github.io/website-performance-optimization-portfolio/dist/views/pizza.html
+use link [here] (https://melvinmonteiro.github.io/website-performance-optimization-portfolio/dist/views/pizza.html)
 
-Code repository is here
-https://github.com/melvinmonteiro/melvinmonteiro.github.io/tree/master/website-performance-optimization-portfolio
+Code repository is [here] (https://github.com/melvinmonteiro/melvinmonteiro.github.io/tree/master/website-performance-optimization-portfolio)
 
 ##SOLUTION
 
