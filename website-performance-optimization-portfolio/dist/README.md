@@ -1,6 +1,6 @@
-## Website Performance Optimization portfolio project
+# Website Performance Optimization portfolio project
 
-### FOR PART 1: Critical Rendering Path Specification
+# FOR PART 1: Critical Rendering Path Specification
 
 I have hosted the files on github. you can use below urls to test performance
 [Link to Part 1](https://melvinmonteiro.github.io/website-performance-optimization-portfolio/dist/index.html)
@@ -14,7 +14,7 @@ Code repository is [here] (https://github.com/melvinmonteiro/melvinmonteiro.gith
 * Moved non-critical js to the bottom
 * compressed large images
 
-### FOR PART 2: Frame Rate & Computational Efficiency Specification
+# FOR PART 2: Frame Rate & Computational Efficiency Specification
 
 use link [here] (https://melvinmonteiro.github.io/website-performance-optimization-portfolio/dist/views/pizza.html)
 
