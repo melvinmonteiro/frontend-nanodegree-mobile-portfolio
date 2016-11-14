@@ -89,6 +89,10 @@
 
                  //show loading wiki links
                  place.loadingWikiLinks(true);
+
+                 //animated the marker
+                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
+
                  //make a ajax call to show related wiki links on click of marker
                  //the set timeout is just used to demonstrate the loading animation based on knockout
                  setTimeout(function(){
@@ -127,6 +131,8 @@
                          place.loadingWikiLinks(false);
                          //clear the error timeout
                          clearTimeout(self.wikiRequestTimeout);
+                         //remove the animation
+                         place.marker.setAnimation(null);
                      }
                  })
                  .fail(function() {
@@ -141,7 +147,8 @@
                        errorContainer.MaterialSnackbar.showSnackbar(data);
                        //stop loading animation
                        place.loadingWikiLinks(false);
-
+                       //remove the animation
+                       place.marker.setAnimation(null);
                  });
 
                  //handle if there is a timeout issue.
@@ -154,6 +161,8 @@
                          errorContainer.MaterialSnackbar.showSnackbar(data);
                          //stop loading animation
                          place.loadingWikiLinks(false);
+                         //remove the animation
+                         place.marker.setAnimation(null);
                  } , 8000 );
         };
 
@@ -166,6 +175,10 @@
             infowindow.open(map, place.marker);
            //show loading wiki links
             place.loadingWikiLinks(true);
+
+            //animated the marker
+            place.marker.setAnimation(google.maps.Animation.BOUNCE);
+
             //make a ajax call to show related wiki links on click of marker
             //the set timeout is just used to demonstrate the loading animation based on knockout
             setTimeout(function(){
