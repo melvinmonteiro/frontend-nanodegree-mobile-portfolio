@@ -12,7 +12,7 @@
         //location co-ordinates of the musuem.
         this.location = location;
         //google marker object.
-        this.marker;
+        this.marker = undefined;
         //related wikipedia links. will have attributes of 'title' and 'url'
         this.relatedWikiLinks = ko.observableArray([]);
         //loadingWikiLinks is used for animation while the related links are being loaded.
@@ -95,7 +95,6 @@
                  setTimeout(function(){
                         self.showWikiInfo(place);
                      }, 1000);
-                 ;
              });
         };
 
@@ -194,7 +193,7 @@
             if (!filter) {
                self.places().forEach(function(place) {
                     //if filter string is modified and equals nothing we set the marker to show
-                    if( place.marker != undefined)
+                    if( place.marker !== undefined)
                         place.marker.setMap(map);
                });
                return self.places();
@@ -233,7 +232,7 @@
        catch (err) {
              //you need to make sure if material js is ready
              //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
-             if(!(typeof(componentHandler) == 'undefined')){
+             if(typeof(componentHandler) !== 'undefined'){
                    componentHandler.upgradeAllRegistered();
              }
              console.log("error when loading map from google api service",err);
@@ -251,15 +250,15 @@
        catch (err) { //error handling
             //you need to make sure if material js is ready
             //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
-            if(!(typeof(componentHandler) == 'undefined')){
+            if(typeof(componentHandler) !== 'undefined'){
                   componentHandler.upgradeAllRegistered();
             }
             console.log("error when loading map from google place api service",err);
-            var data = {
+            var dataPlaces = {
                 message: 'error when loading map from google place api service. Check if google map api is down!'
             };
-            var errorContainer = document.querySelector('#error-snackbar');
-            errorContainer.MaterialSnackbar.showSnackbar(data);
+            var errorContainerPlaces = document.querySelector('#error-snackbar');
+            errorContainerPlaces.MaterialSnackbar.showSnackbar(dataPlaces);
        }
     }
 
@@ -285,7 +284,7 @@
         else { //error handling
             //you need to make sure if material js is ready
              //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
-             if(!(typeof(componentHandler) == 'undefined')){
+             if(typeof(componentHandler) !== 'undefined'){
                    componentHandler.upgradeAllRegistered();
              }
             console.log("error when loading map from google place api service",err);
@@ -302,7 +301,7 @@
     //Error nandling
     $(document).ready(function (){
         if("undefined" == typeof google.maps  || "undefined" == typeof google.maps.places ) {
-            if(!(typeof(componentHandler) == 'undefined')){
+            if(typeof(componentHandler) !== 'undefined') {
                    componentHandler.upgradeAllRegistered();
             }
             var errorContainer = document.querySelector('#error-snackbar');
