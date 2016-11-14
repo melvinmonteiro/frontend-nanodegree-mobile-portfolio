@@ -4,10 +4,10 @@ is a Single page application featuring a map of the museums in New York City.
 
 ## How to run locally
 
-Run the follwing steps.
-* npm install
-* gulp install
-* gulp serve
+Run the following steps.
+* git clone https://github.com/melvinmonteiro/melvinmonteiro.github.io.git or download as a zip
+* go to directory frontend-developer-neighborhood-map
+* Open index.html in a browser
 
 ## Functionality
 
