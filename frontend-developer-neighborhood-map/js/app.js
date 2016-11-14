@@ -1,9 +1,6 @@
-(function () {
-
     //Constants used in the application for manhattan latitude and longitude.
     var MANHATTAN_NEW_YORK_CITY_LAT = 40.7831;
-	var MANHATTAN_NEW_YORK_CITY_LONG = -73.9712;
-
+    var MANHATTAN_NEW_YORK_CITY_LONG = -73.9712;
     /*
      * A Place Model that represents a museum
      */
@@ -221,15 +218,49 @@
     var placesViewModel = new PlacesViewModel();
 
     //map is used to store the map object
+    //this will be called when the map async call loads asynchronously
     //see this
     //https://developers.google.com/maps/documentation/javascript/adding-a-google-map
     var map;
-    var mapInit = function () {
-         map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: MANHATTAN_NEW_YORK_CITY_LAT, lng: MANHATTAN_NEW_YORK_CITY_LONG},
-                zoom: 13
-       });
-       placeService();
+    var infowindow;
+    function initMap() {
+        try {
+             map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: MANHATTAN_NEW_YORK_CITY_LAT, lng: MANHATTAN_NEW_YORK_CITY_LONG},
+                    zoom: 13
+             });
+       }
+       catch (err) {
+             //you need to make sure if material js is ready
+             //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
+             if(!(typeof(componentHandler) == 'undefined')){
+                   componentHandler.upgradeAllRegistered();
+             }
+             console.log("error when loading map from google api service",err);
+             var data = {
+                 message: 'error when loading map from google api service. Check if google map api is down!'
+             };
+             var errorContainer = document.querySelector('#error-snackbar');
+             errorContainer.MaterialSnackbar.showSnackbar(data);
+       }
+       //initialize a global infowindow
+       infowindow = new google.maps.InfoWindow();
+       try {
+            placeService();
+       }
+       catch (err) { //error handling
+            //you need to make sure if material js is ready
+            //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
+            if(!(typeof(componentHandler) == 'undefined')){
+                  componentHandler.upgradeAllRegistered();
+            }
+            console.log("error when loading map from google place api service",err);
+            var data = {
+                message: 'error when loading map from google place api service. Check if google map api is down!'
+            };
+            var errorContainer = document.querySelector('#error-snackbar');
+            errorContainer.MaterialSnackbar.showSnackbar(data);
+       }
     }
 
     //use to place library to get places.
@@ -251,14 +282,30 @@
             placesViewModel.addPlace( new Place(results[i].place_id, results[i].name, results[i].geometry.location) );
           }
         }
+        else { //error handling
+            //you need to make sure if material js is ready
+             //http://stackoverflow.com/questions/34579700/material-design-lite-js-not-applied-to-dynamically-loaded-html-file
+             if(!(typeof(componentHandler) == 'undefined')){
+                   componentHandler.upgradeAllRegistered();
+             }
+            console.log("error when loading map from google place api service",err);
+            var data = {
+                 message: 'error when loading map from google place api service. Check if google map api is down!'
+            };
+            var errorContainer = document.querySelector('#error-snackbar');
+            errorContainer.MaterialSnackbar.showSnackbar(data);
+        }
     };
-
-    //intialize the maps.
-    mapInit();
-    //initialize a global infowindow
-    var infowindow = new google.maps.InfoWindow();
-
     //apply knockout bindings
     ko.applyBindings(placesViewModel);
 
-}());
+    //Error nandling
+    $(document).ready(function (){
+        if("undefined" == typeof google.maps  || "undefined" == typeof google.maps.places ) {
+            if(!(typeof(componentHandler) == 'undefined')){
+                   componentHandler.upgradeAllRegistered();
+            }
+            var errorContainer = document.querySelector('#error-snackbar');
+            errorContainer.MaterialSnackbar.showSnackbar({message: "error loading google api.Check console logs."});
+        }
+    });

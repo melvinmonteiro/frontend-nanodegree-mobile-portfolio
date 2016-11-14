@@ -2,6 +2,13 @@
 
 is a Single page application featuring a map of the museums in New York City.
 
+## How to run locally
+
+Run the follwing steps.
+* npm install
+* gulp install
+* gulp serve
+
 ## Functionality
 
 * To see the functionality click link [here] (https://melvinmonteiro.github.io/frontend-developer-neighborhood-map/)
