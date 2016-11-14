@@ -58,11 +58,11 @@
             toggle hide/show 'hide-sidebar' css class
         */
         self.togglePlacesList = function() {
-            if (self.togglePlacesListBoolean()) {
-                self.togglePlacesDisplayText("Show Place List")
+            if (self.togglePlacesDisplayText() === "Show Place List") {
+                self.togglePlacesDisplayText("Hide Place List");
             }
             else {
-                self.togglePlacesDisplayText("Hide Place List")
+                self.togglePlacesDisplayText("Show Place List");
             }
             return self.togglePlacesListBoolean(!self.togglePlacesListBoolean());
         };

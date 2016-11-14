@@ -103,6 +103,19 @@ ul,li {
     transform: translateX(-320px);
 }
 
+@media screen and (max-width: 450px) {
+    h5 {
+        font-size: 13px;
+    }
+    h6 {
+        padding: 2px;
+        margin: 0;
+    }
+    .card:hover {
+        background-color: #fff;
+    }
+}
+
 /*
   rest is the loading animation i got from the below wesbites.
   https://projects.lukehaas.me/css-loaders/
