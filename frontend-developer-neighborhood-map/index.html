@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Material design css-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+
+        <!-- Material design js -->
+        <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+        <!-- Our custom application css -->
+        <link rel="stylesheet" href="css/style.css"/>
+    </head>
+    <body>
+        <!-- Show loading until knockout is loaded. -->
+        <!-- ko if: false -->
+            <div class="loader"></div>
+        <!-- /ko -->
+
+        <!-- Main section -->
+        <div id="main" data-bind="css: { hide: false }" class="hide">
+            <section>
+                <div class="search-filter">
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <input id="filterInput" class="mdl-textfield__input" data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                        <label class="mdl-textfield__label" for="filterInput">Filter List...</label>
+                    </div>
+
+                    <div id="floating-toggle-button">
+                        <button data-bind="text: $root.togglePlacesDisplayText, click: $root.togglePlacesList" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div id="sidebar" data-bind="css: {'hide-sidebar': togglePlacesListBoolean}">
+                    <div id="places-list">
+                        <div data-bind="foreach: filteredPlaces">
+                            <article>
+                                <div class="card mdl-shadow--2dp">
+                                    <div class="card-heading-row">
+                                        <div class="card-title" data-bind="text: name, click: $root.showInMap">
+                                        </div>
+                                        <div class = "card-info-loader mdl-spinner mdl-js-spinner" data-bind="css: {'is-active' : loadingWikiLinks }"></div>
+                                    </div>
+                                    <div>
+                                        <div class="mdl-list__item-primary-content" id="places-info" data-bind="">
+                                            <ul data-bind="foreach: relatedWikiLinks, attr: {'data-id': id}, scrollTo: $root.scrolledItem() == $data">
+                                                <li class="card-info-item mdl-list__item">
+                                                    <a data-bind="attr: { href: url}" target="_blank">
+                                                        <span data-bind="text: title">
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Error Snackbar -->
+            <div id="map" data-bind="css: {'full-screen-map': togglePlacesListBoolean}">
+            </div>
+
+
+        </div>
+
+        <div id="error-snackbar" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+
+    </body>
+    <!-- Knockout js -->
+    <script type='text/javascript' src='js/knockout-3.4.1.js'></script>
+    <!-- google api js -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtaV0XkMz5PkDUHzs7B7M9AT4shNGyP_Y&libraries=places"></script>
+    <!-- jquery js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- application js -->
+    <script type='text/javascript' src='js/app.js'></script>
+</html>
