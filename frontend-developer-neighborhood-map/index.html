@@ -27,7 +27,7 @@
             <section>
                 <div class="search-filter">
                     <div class="mdl-textfield mdl-js-textfield">
-                        <input id="filterInput" class="mdl-textfield__input" data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                        <input id="filterInput" class="mdl-textfield__input" data-bind="textInput: filter" />
                         <label class="mdl-textfield__label" for="filterInput">Filter List...</label>
                     </div>
 
@@ -85,9 +85,9 @@
     <!-- jquery js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- application js -->
-    <script type='text/javascript' src='js/app.js'></script>
+    <script src='js/app.js'></script>
     <!-- google api js loaded asynchronously -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtaV0XkMz5PkDUHzs7B7M9AT4shNGyP_Y&libraries=places&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtaV0XkMz5PkDUHzs7B7M9AT4shNGyP_Y&libraries=places&callback=initMap" onerror="mapError()"></script>
 
 
 </html>
